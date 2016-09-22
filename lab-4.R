@@ -26,7 +26,7 @@ rbinom(number.of.samples, number.of.trials.per.sample, probability.of.success)
 # of course, ESP doesn't exist, so the probability of a successful guess is 0.50.
 # store the result in a vector called esp.data
 
-esp.data <- NA # answer needed here.
+esp.data <- rbinom(100, 20, 0.5)
 
 # a quick way to visualize a distribution is with the hist() function:
 hist(esp.data)
@@ -45,7 +45,7 @@ dbinom(value.to.check, number.of.trials, probability.of.success)
 # questions correctly, if they have a 0.9 probability of giving a correct answer
 # for each individual question.
 
-# answer needed here.
+dbinom(87,100,0.9)
 
 # with dbinom, you can use a vector as the first argument, to check the probability
 # of multiple values at the same time:
@@ -58,7 +58,9 @@ dbinom(values, 8, 0.5)
 # hint: create one vector for the different possible outcomes
 #       then use dbinom to calculate the probability of all of the elements in the vector
 
-# answer needed here.
+head.count <- c(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16)
+plot(head.count, dbinom(head.count, 16, 0.5))
+
 
 # quick detour #
 
@@ -80,14 +82,15 @@ hist(hist.sample, xlim=c(0,100)) # compare this plot to the line above.
 # generate 100 samples from a normal distribution with mean 0 and standard deviation 10.
 # then use hist() to create a histogram of these samples.
 
-# answer needed here.
+hist(rnorm(100, 0,10))
 
 # now plot the probability density function of this distribution.
 # use the same strategy as you did above with the binomial to find the density of the normal
 # distribution with mean 0 and sd 10 for values between -50 and 50. the distribution is continuous
 # so, choose a reasonably small step size between values (remember the seq() function).
 
-# answer needed here.
+values <- seq(-50, 50, by=5)
+plot(values, dnorm(values, 0, 10))
 
 #### practice calculating likelihoods ####
 
@@ -100,11 +103,14 @@ esp.practice.data <- data.frame(subject=1:10, n.correct=c(11,10,6,10,6,12,10,8,9
 # of the probability of success parameter: 0.4, 0.5, and 0.6.
 # hint: prod() will multiple all elements of a vector together.
 
-# answer needed here.
+four.probs<- prod(dbinom(esp.practice.data$n.correct, 20, 0.4))
+five.probs <- prod(dbinom(esp.practice.data$n.correct, 20, 0.5))
+six.probs <- prod(dbinom(esp.practice.data$n.correct, 20, 0.6))
+
 
 # which parameter value of those options is most likely?
-
-# answer here.
+# 0.5 is the most likely parameter because it reflects that the participants were guessing
+# with a 50/50 chance of accuracy. The other parameters reflect biases one way or the other.
 
 # here is a sample of response times for a single subject from a rapid decision making experiment.
 rt.sample <- c(391.5845, 411.9970, 358.6373, 505.3099, 616.2892, 481.0751, 422.3132, 511.7213, 205.2692, 522.3433, 370.1850,
@@ -116,26 +122,32 @@ rt.sample <- c(391.5845, 411.9970, 358.6373, 505.3099, 616.2892, 481.0751, 422.3
 # hint: sum() adds the numbers in a vector. log() is the natural log function, or log=T for dnorm().
 
 # 1) mean 350, sd 50
-# answer needed here.
+sum(dnorm(rt.sample, 350, 50, log=T))
+# -222.2521
 
 # 2) mean 400, sd 50
-# answer needed here.
+sum(dnorm(rt.sample, 400, 50, log=T))
+# -212.3154
 
 # 3) mean 450, sd 50
-# answer needed here.
+sum(dnorm(rt.sample, 450, 50, log=T))
+# -232.3787
 
 # 4) mean 350, sd 100
-# answer needed here.
+sum(dnorm(rt.sample, 350, 100, log=T))
+# -185.0541
 
 # 5) mean 400, sd 100
-# answer needed here.
+sum(dnorm(rt.sample, 400, 100, log=T))
+# -182.5699
 
 # 6) mean 450, sd 100
-# answer needed here.
+sum(dnorm(rt.sample, 450, 100, log=T))
+# -187.5857
 
 # which parameter set has the highest likelihood?
 
-# answer needed here.
+# mean of 400 and sd of 100, with a likelihood of -182.5699
 
 # here is a set of data for a subject in a categorization experiment, modeled with GCM.
 # calculate the log likelihood of the parameters in the model (which i am not showing you).
